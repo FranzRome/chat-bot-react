@@ -1,38 +1,165 @@
-.App {
-  text-align: center;
+html, body {
+  min-height: 100%;
+  overscroll-behavior: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 6px 12px;
+  font-family: 'Lato', sans-serif;
+  font-size: min(2.3vw, 18px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  outline: none;
+  transition: 0.2s;
+  z-index: 1;
+  border: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button:active {
+  transform: translate(0, 6%);
+  box-shadow: inset 1px 1px 1px 0px rgba(255, 255, 255, .5),
+    3px 3px 10px 0px rgba(0, 0, 0, .1),
+    2px 2px 2px 0px rgba(0, 0, 0, .1);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+button:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  border-radius: 5px;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  transition: all 0.3s ease;
+}
+
+#root {
+  height: 100vh;
+}
+
+.app {
+  height: 150vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-family: Arial, sans-serif;
+  background-image: linear-gradient(135deg, rgb(2, 34, 31), rgb(13, 63, 8));
+  padding: 32px 16px;
+}
+
+.title {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  max-width: 600px;
+  min-height: 600px;
+  border: 1px solid #d0d0d0aa;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #cccccc77;
+  padding: 12px 24px
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.messages {
+  display: flex;
+  flex-direction: column;
+  min-height: 85%;
+  gap: 12px;
+  overflow-y: scroll;
+  border-bottom: 1px solid #ccc;
+  padding: 12px;
+}
+
+.message {
+  clear: both;
+  float: left;
+  padding: 8px 16px;
+  border-radius: 10px 10px 10px 0;
+  background: rgba(0, 0, 0, .3);
+  font-size: min(2vw, 12px);
+  line-height: 1.4;
+}
+
+.message.user {
+  float: right;
+  color: #fff;
+  text-align: right;
+  background: linear-gradient(120deg, #248A52, #257287);
+  border-radius: 10px 10px 0 10px;
+  align-self: end;
+}
+
+.message.bot {
+  text-align: left;
+  background: linear-gradient(120deg, #43434380, #74747480);
+  align-self: start;
+}
+
+.message-input {
+  display: flex;
+  gap: 8px;
+  padding: 16px 4px;
+  justify-self: end;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 8px;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  border: none;
+  border-radius: 8px;
+}
+
+.send-message {
+  background-color: cornflowerblue;
+}
+
+.send-message:after {
+  background-color: royalblue;
+}
+
+.send-message:hover {
+  color: #fff;
+}
+
+.send-message:hover:after {
+  left: 0;
+  width: 100%;
+}
+
+.clear-chat {
+  background: darkred;
+}
+
+.clear-chat:after {
+  background-color: crimson;
+}
+
+.clear-chat:hover:after {
+  left: 0;
+  width: 100%;
+}
+
+.fa {
+  padding: 0 4px;
 }
