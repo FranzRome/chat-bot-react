@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+# Chat Bot Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a chat bot interface built using **React** and **Redux**.
+It includes a mocked API responses, states management, error handling and persistent chat history. The project is structured for easy maintenance, testing, and modularity, and the entire environment can be encapsulated in a Docker container for seamless deployment.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+1. [Getting Started](#getting-started)
+2. [Project Structure](#project-structure)
+3. [Design Choices](#design-choiches)
+4. [Docker Setup](#docker-setup)
+5. [Testing](#testing)
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Node.js** ([version 20](https://nodejs.org/en/blog/release/v20.9.0) or above recommended)
+- **Docker** (optional, for containerized setup)
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
 
-### `npm run build`
+   ```bash
+   git clone https://github.com/FranzRome/chat-bot-react.git
+   cd chat-bot-react
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install the dependencies:q
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Start the development server:
 
-### `npm run eject`
+   ```bash
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The application will run on [http://localhost:3000](http://localhost:3000).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The project follows a **modular structure** to keep the code organized and promote reusability.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+src/
+├── components/              # UI Components
+│   ├── ChatWindow.js        # Main chat interface
+│   ├── Message.js           # Displays individual message
+│   └── MessageInput.js      # Input field to send messages and delte chat history
+│
+├── slices/                  # Redux Slices
+│   └── chatSlice.js
+│
+├── tests/                   # Unit tests
+│   └── unit/
+│       ├── ChatWindow.test.js
+│       ├── Message.test.js
+│       └── MessageInput.test.js
+│
+├── App.js                   # Main App component
+└── index.js                 # Entry point
+```
 
-## Learn More
+## Design Choiches
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Component-Based Architecture
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Each UI component is self-contained and focused on a single responsibility:
 
-### Code Splitting
+- **`ChatWindow.js`**: Manages the chat interface, displaying messages and handling message sending
+- **`Message.js`**: A stateless component that displays a single message with styling based on the user (bot or user)
+- **`MessageInput.js`**: Handles user input and sends messages to the chat
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Redux State Management
 
-### Analyzing the Bundle Size
+[Redux](https://redux.js.org/) is used to manage the application's state, particularly to handle messages and loading states. This approach ensures consistency, especially since the chat history needs to persist across sessions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Persistence**: Chat history is stored in `localStorage` and restored on page reloads. Redux helps coordinate state updates and rehydrate from localStorage
+- **Mock API**: Instead of a real API, we’ve created a mock `getBotResponse()` function to simulate bot responses, enabling the project to function offline
 
-### Making a Progressive Web App
+### Loading and Error States
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Loading and error handling are implemented in the UI to improve the user experience:
 
-### Advanced Configuration
+- A loading indicator appears when the bot is processing a response
+- Error messages are displayed if the bot fails to respond
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Test Strategy
 
-### Deployment
+To guarantee single components shows what we expect unit tests are
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Docker Setup
 
-### `npm run build` fails to minify
+To simplify deployment, this project can be run in a Docker container. Here’s how to set up Docker for this project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Build and Run the Docker Container
+
+**IMPORTANT**: verify your docker engine is running on your machine
+
+1. Build the Docker image:
+
+   ```bash
+   docker build -t chat-bot .
+   ```
+
+2. Run the Docker container:
+
+   ```bash
+   docker run -p 3000:3000 chat-bot
+   ```
+
+The application is accessible at [http://localhost:3000](http://localhost:3000).
+
+## Testing
+
+To make unit tests the application [Jest](https://jestjs.io/) was used to verify single components functionalities.
+Tests are located in the `src/tests/unit` directory. To run the tests, use:
+
+```bash
+npm test
+```
