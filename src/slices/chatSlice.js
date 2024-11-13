@@ -19,10 +19,10 @@ const chatSlice = createSlice({
       state.messages.push(action.payload);
       saveChatHistory(state.messages);
     },
-    clearChat: (state, action) =>{
+    clearChat: (state, action) => {
       state.messages = [];
       clearChatHistory();
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -38,6 +38,8 @@ const chatSlice = createSlice({
       .addCase(recieveMessage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        state.messages.pop();
+        saveChatHistory(state.messages);
       });
   },
 });
