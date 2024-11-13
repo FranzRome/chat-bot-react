@@ -96,20 +96,23 @@ button:after {
   background: rgba(0, 0, 0, .3);
   font-size: min(2vw, 12px);
   line-height: 1.4;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
 }
 
 .message.user {
   float: right;
   color: #fff;
   text-align: right;
-  background: linear-gradient(120deg, #248A52, #257287);
+  background: linear-gradient(120deg, #797132, #3c4d0b);
   border-radius: 10px 10px 0 10px;
   align-self: end;
 }
 
 .message.bot {
   text-align: left;
-  background: linear-gradient(120deg, #43434380, #74747480);
+  background: linear-gradient(120deg, #4f4f4f80, #6c6c6c80);
   align-self: start;
 }
 
