@@ -8,16 +8,20 @@ const ChatWindow = () => {
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chat.messages);
   const loading = useSelector((state) => state.chat.loading);
+  const error = useSelector((state) => state.chat.error);
 
   const handleSendMessage = (text) => {
-    dispatch(addMessage({ text, user: 'user' }));
-    dispatch(recieveMessage(text));
+    if (!error) {
+      dispatch(addMessage({ text, user: 'user' }));
+      dispatch(recieveMessage(text));
+    }
   };
 
   useEffect(() => {
     if (messages.length === 0) {
       dispatch(recieveMessage('Hello, how can I help you?'));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -29,6 +33,8 @@ const ChatWindow = () => {
           })
         }
         {loading && <p>Loading...</p>}
+        {error && <p className = 'error'>There was an error, <u>press F5</u> to reload the application</p> /* Error handling user side */}
+        {error && console.log(error) /* Error handling developer side */}
       </div>
       <MessageInput onSend={handleSendMessage} />
     </div>

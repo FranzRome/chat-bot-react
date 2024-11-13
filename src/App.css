@@ -163,3 +163,8 @@ button:after {
 .fa {
   padding: 0 4px;
 }
+
+.error {
+  color: #ee0000;
+  font-weight: 700;
+}
