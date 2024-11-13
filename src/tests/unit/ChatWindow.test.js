@@ -1,4 +1,4 @@
-import React, { act } from "react";
+import React from "react";
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -34,9 +34,8 @@ describe('ChatWindow', () => {
     const store = getStore({ chat: { messages: [], loading: false } });
 
     renderComponent(store);
-    await new Promise((r) => setTimeout(r, 3000));
 
-    expect(screen.getByText('bot: Hello, how can I help you?')).toBeInTheDocument();
+    expect(await screen.findByText('bot: Hello, how can I help you?')).toBeInTheDocument();
   });
 
   test('displays messages from the store', () => {
@@ -53,7 +52,7 @@ describe('ChatWindow', () => {
     expect(screen.getByText('user: Hello')).toBeInTheDocument();
   });
 
-  test('shows loading indicator when loading is true', () => {
+  test('shows loading indicator when loading is true', async () => {
     const store = getStore({
       chat: {
         messages: [{ text: 'Hello', user: 'user' }],
@@ -63,6 +62,6 @@ describe('ChatWindow', () => {
 
     renderComponent(store);
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(await screen.findByText('Loading...')).toBeInTheDocument();
   });
 });
