@@ -41,6 +41,8 @@ It includes a mocked API responses, states management, error handling and persis
 
 The application will run on [http://localhost:3000](http://localhost:3000).
 
+### <mark>WARNING:</mark> bot responses have a 30% fail rate defined in *src/api/botAPI.js* to test effectively error handling features without internet connection
+
 ## Project Structure
 
 The project follows a **modular structure** to keep the code organized and promote reusability.
